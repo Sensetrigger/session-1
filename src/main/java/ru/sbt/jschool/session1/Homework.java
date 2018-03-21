@@ -21,42 +21,37 @@ public class Homework implements PropertyHelper {
     }
 
     public String stringValue(String name) {
-        if (name.contains("=")) {
-            String cut = name.substring(0, name.indexOf("="));
+        //  Если передан аргумент командной строки вида `name=XXX`, то возвращается он.
+        if (args.length > 0)
+            for (String arg : args) {
+                if (arg.contains(name))
+                    return arg.substring(arg.indexOf("=") + 1, arg.length());
+            }
 
-            //  Если передан аргумент командной строки вида `name=XXX`, то возвращается он.
-            if (args.length > 0)
-                for (String arg : args) {
-                    if (arg.contains(name))
-                        return arg.substring(arg.indexOf("=") + 1, arg.length());
-                break;
-                }
+        //  Если существует системная настройка вида `name=XXX`, то возвращается её значение.
+        if (System.getProperties().containsKey(name))
+            return System.getProperty(name);
 
-            //  Если существует системная настройка вида `name=XXX`, то возвращается её значение.
-            else if (System.getProperties().containsKey(cut))
-                return System.getProperty(cut);
+        //  Если определена переменная окружения вида `name=XXX`, то используется она.
+        if (System.getenv().containsKey(name))
+            return System.getenv(name);
 
-                //  Если определена переменная окружения вида `name=XXX`, то используется она.
-            else if (System.getenv().containsKey(cut))
-                return System.getenv(cut);
+        if (path != null) {
+            Properties prop = new Properties();
+            InputStream input = null;
 
-            else if (path != null) {
-                Properties prop = new Properties();
-                InputStream input = null;
-
-                try {
-                    input = new FileInputStream(this.path);
-                    prop.load(input);
-                    return prop.getProperty(cut);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } finally {
-                    if (input != null) {
-                        try {
-                            input.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            try {
+                input = new FileInputStream(this.path);
+                prop.load(input);
+                return prop.getProperty(name);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -74,7 +69,7 @@ public class Homework implements PropertyHelper {
 
     public static void main(String[] args) {
         Homework h = new Homework(args,"config.properties");
-        System.out.println(h.stringValue("name=7"));
+        System.out.println(h.stringValue("name"));
     }
 }
 
