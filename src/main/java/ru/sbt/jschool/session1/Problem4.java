@@ -12,9 +12,9 @@ public class Problem4 {
         //  Если передан параметр вида JSCHOOl1_COUNT=XXX, где XXX число раз, то используется оно.
         if (args.length > 0) {
             for (String arg : args) {
-                if (arg.contains("JSCHOOL1_COUNT")) {
+                if (arg.substring(0, 15).equals("JSCHOOL1_COUNT=") && arg.length() < 19) {
                     try {
-                        Integer num = Integer.parseInt(arg.substring(15));
+                        Integer num = Integer.parseInt(arg.substring(15, arg.length()));
 
                         for (int i = 0; i < num; i++)
                             System.out.println("Hello world!");
@@ -24,13 +24,14 @@ public class Problem4 {
                     }
 
                 }
-                break; //JSCHOOL1_COUNT=3
+                break;
             }
+            System.out.println();
         }
 
         //  Если передана системная настройка вида JSCHOOl1_COUNT=XXX, где XXX число раз, то используется оно.
         if (System.getProperties().containsKey("JSCHOOL1_COUNT")) {
-            Integer num = Integer.parseInt(System.getProperties().getProperty("JSCHOOL1_COUNT"));
+            Integer num = Integer.parseInt(System.getProperty("JSCHOOL1_COUNT"));
             for (int i = 0; i < num; i++)
                 System.out.println("Hello world!");
             System.out.println();
@@ -38,7 +39,7 @@ public class Problem4 {
 
         //  Если определена переменная окружения вида JSCHOOl1_COUNT=XXX, где XXX число раз, то используется оно.
         if (System.getenv().containsKey("JSCHOOL1_COUNT")) {
-            Integer num2 = Integer.parseInt(System.getenv().get("JSCHOOL1_COUNT"));
+            Integer num2 = Integer.parseInt(System.getenv("JSCHOOL1_COUNT"));
             for (int i = 0; i < num2; i++)
                 System.out.println("Hello world!");
             System.out.println();
