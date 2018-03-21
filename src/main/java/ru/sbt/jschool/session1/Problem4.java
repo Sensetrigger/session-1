@@ -30,7 +30,7 @@ public class Problem4 {
         }
 
         //  Если передана системная настройка вида JSCHOOl1_COUNT=XXX, где XXX число раз, то используется оно.
-        if (System.getProperties().containsKey("JSCHOOL1_COUNT")) {
+        else if (System.getProperties().containsKey("JSCHOOL1_COUNT")) {
             Integer num = Integer.parseInt(System.getProperty("JSCHOOL1_COUNT"));
             for (int i = 0; i < num; i++)
                 System.out.println("Hello world!");
@@ -38,7 +38,7 @@ public class Problem4 {
         }
 
         //  Если определена переменная окружения вида JSCHOOl1_COUNT=XXX, где XXX число раз, то используется оно.
-        if (System.getenv().containsKey("JSCHOOL1_COUNT")) {
+        else if (System.getenv().containsKey("JSCHOOL1_COUNT")) {
             Integer num2 = Integer.parseInt(System.getenv("JSCHOOL1_COUNT"));
             for (int i = 0; i < num2; i++)
                 System.out.println("Hello world!");
@@ -46,7 +46,7 @@ public class Problem4 {
         }
 
         //  Если определена переменная окружения вида JSCHOOL1_PROPERTIES_FILE=XXX, где XXX это путь к существующему файлу, то загружаем настройки оттуда и пытаемся получить настройку оттуда.
-        if (System.getenv().containsKey("JSCHOOL1_PROPERTIES_FILE")) {
+        else if (System.getenv().containsKey("JSCHOOL1_PROPERTIES_FILE")) {
             Properties prop = new Properties();
             InputStream input = null;
 
