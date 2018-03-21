@@ -63,6 +63,29 @@ public class Homework implements PropertyHelper {
         }
 
         else System.out.println("null");
+
+        Homework h = new Homework(args,"config.properties");
+
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+            input = new FileInputStream(h.path);
+            prop.load(input);
+            System.out.println(prop.getProperty("name"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
     }
 }
 
