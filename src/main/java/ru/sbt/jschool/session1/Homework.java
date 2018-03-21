@@ -24,7 +24,7 @@ public class Homework implements PropertyHelper {
         //  Если передан аргумент командной строки вида `name=XXX`, то возвращается он.
         if (args.length > 0)
             for (String arg : args) {
-                if (arg.contains(name))
+                if (arg.substring(0, name.length()).equals(name))
                     return arg.substring(arg.indexOf("=") + 1, arg.length());
             }
 
