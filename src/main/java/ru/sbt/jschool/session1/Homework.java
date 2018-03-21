@@ -9,19 +9,17 @@ import java.util.Properties;
 public class Homework implements PropertyHelper {
 
     String [] args;
-    String path;
     Properties prop;
 
     public Homework(String[] a, String p) {
         args = a;
-        path = p;
 
-        if (path != null) {
+        if (p != null) {
             Properties pr = new Properties();
             InputStream input = null;
 
             try {
-                input = new FileInputStream(path);
+                input = new FileInputStream(p);
                 pr.load(input);
                 prop = pr;
             } catch (IOException ex) {
@@ -58,7 +56,7 @@ public class Homework implements PropertyHelper {
         if (System.getenv().containsKey(name))
             return System.getenv(name);
 
-        if (path != null)
+        if (prop != null)
             return prop.getProperty(name);
 
         return null;
