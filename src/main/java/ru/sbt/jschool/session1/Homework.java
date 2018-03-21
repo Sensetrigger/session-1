@@ -72,4 +72,3 @@ public class Homework implements PropertyHelper {
         System.out.println(h.stringValue("name"));
     }
 }
-
