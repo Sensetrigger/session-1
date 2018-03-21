@@ -10,10 +10,32 @@ public class Homework implements PropertyHelper {
 
     String [] args;
     String path;
+    Properties prop;
 
     public Homework(String[] a, String p) {
         args = a;
         path = p;
+
+        if (path != null) {
+            Properties pr = new Properties();
+            InputStream input = null;
+
+            try {
+                input = new FileInputStream(path);
+                pr.load(input);
+                prop = pr;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     public Homework() {
@@ -36,26 +58,9 @@ public class Homework implements PropertyHelper {
         if (System.getenv().containsKey(name))
             return System.getenv(name);
 
-        if (path != null) {
-            Properties prop = new Properties();
-            InputStream input = null;
+        if (path != null)
+            return prop.getProperty(name);
 
-            try {
-                input = new FileInputStream(this.path);
-                prop.load(input);
-                return prop.getProperty(name);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
         return null;
     }
 
